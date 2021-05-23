@@ -6,7 +6,7 @@ export default function Shelves(props) {
   const currentlyReding=allBooks.filter(book=>book.shelf==="currentlyReading");
   const wantToRead=allBooks.filter(book=>book.shelf==="wantToRead");
   const read=allBooks.filter(book=>book.shelf==="read");
- // console.log(currentlyReding)
+
   return (
    
             <div className="list-books-content">

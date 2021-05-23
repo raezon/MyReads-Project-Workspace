@@ -37,6 +37,7 @@ updateSearchPageState(state){
   componentDidMount() {
     // get books on load
     BooksAPI.getAll().then(resp => this.setState({ books:resp}));
+     
   }
 
   render() {
@@ -45,13 +46,15 @@ updateSearchPageState(state){
         {this.state.showSearchPage ? (
        
     
-         <Search showSearchPage={this.updateSearchPageState.bind(this)}/>
+         <Search  AllBooks={this.state.books} changeBookShelf={this.changeBookShelf.bind(this)}
+                  showSearchPage={this.updateSearchPageState.bind(this)}/>
    
 
         ) : (
           <div className="list-books">
       
           <Header/>
+        
           <Shelves allBooks={this.state.books} changeBookShelf={this.changeBookShelf.bind(this)}/>
 		  <SearchButton  showSearchPage={this.updateSearchPageState.bind(this)}/>
   			

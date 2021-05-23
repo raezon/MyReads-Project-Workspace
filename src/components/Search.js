@@ -1,21 +1,59 @@
-import React from 'react'
 
+import React, { useState } from 'react';
+import Shelves from './Shelves';
 export default function Search(props) {
+ const [books, setBooks] =  useState([]);
+ const [query, setQuery] =  useState("");
+
+  const getBooks = event => {
+	
+    const query1 = event.target.value;
+    let AllBooks=[];
+     setQuery( query1 );
+    // if user input => run the search
+    if (query1) {
+      
+       AllBooks=props.AllBooks.filter(function(item){return item.title === query1;})
+       console.log(AllBooks)
+	   if(AllBooks.length>0){
+         setBooks(AllBooks)
+       }
+          
+       else
+           setBooks([])
+
+      // if query is empty => reset state to default
+    } else setBooks([]);
+   
+  };
+
+
+
+
   return (
  
             <div className="search-books">
             <div className="search-books-bar">
               <a className="close-search" onClick={() => props.showSearchPage(false)}>Close</a>
               <div className="search-books-input-wrapper">
-                {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
+            	  <input
+                     type='text' 
+                    placeholder="Search by title or author"
+                    value={query}
+                    onChange={getBooks}
+                  />
 
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-                <input type="text" placeholder="Search by title or author"/>
+               {books.length > 0 && (
+				<div>
+                  <h3>Search returned {books.length} books </h3>
+                  <ol className="books-grid">
+                    {books.map(book => (
+                         <Shelves allBooks={books} changeBookShelf={props.changeBookShelf}/>
+                    ))}
+                  </ol>
+                </div>
+          )}
+                           
 
               </div>
             </div>
@@ -25,5 +63,3 @@ export default function Search(props) {
           </div>
   )
 }
-
- 
